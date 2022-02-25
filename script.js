@@ -2,13 +2,26 @@
 let apiQuotes = [];
 let randomQuote = [];
 
+const quoteContainer = document.getElementById('quote-container');
 const twitter = document.getElementById('twitter');
 const quote = document.getElementById('quote');
 const author = document.getElementById('author');
 const button = document.getElementById('new-quote');
+const loader = document.getElementById('loader')
+
+function loading() {
+  loader.hidden = false;
+  quoteContainer.hidden = true;
+}
+
+function loadingComplete() {
+  loader.hidden = true;
+  quoteContainer.hidden = false;
+}
 
 // Random new quote
 function newQuote() {
+  loading();
   randomQuote = apiQuotes[Math.floor(Math.random() * apiQuotes.length)];
 
   if (randomQuote.text.length > 50) {
@@ -17,9 +30,11 @@ function newQuote() {
     quote.classList.remove('long-quote');
   }
   quote.textContent = randomQuote.text;
+  loadingComplete();
 }
 
 async function getQuotes() {
+  loading();
   try {
     const response = await fetch('https://type.fit/api/quotes');
     apiQuotes = await response.json();
