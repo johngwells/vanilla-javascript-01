@@ -552,3 +552,5 @@ const localQuotes = [
     author: null,
   },
 ];
+
+export { localQuotes };
